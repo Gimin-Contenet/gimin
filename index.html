@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reference Library</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f5f5f3;
+      --card: #ffffff;
+      --text: #1f1f1f;
+      --muted: #777;
+      --line: #e8e8e8;
+      --soft: #f3f3f3;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      --shadow-hover: 0 14px 34px rgba(0, 0, 0, 0.08);
+      --radius: 20px;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      background: #ffffff;
+      padding: 72px 20px 56px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .profile {
+      width: 124px;
+      height: 124px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 4px solid #f2f2f2;
+      background: #ddd;
+    }
+
+    .header-text {
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 13px;
+      color: #666;
+      background: var(--soft);
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    header h1 {
+      margin: 0 0 12px;
+      font-size: 42px;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .intro {
+      margin: 0;
+      font-size: 17px;
+      color: #333;
+    }
+
+    .sub {
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    .controls {
+      background: #fff;
+      border: 1px solid #ececec;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      position: sticky;
+      top: 12px;
+      z-index: 10;
+    }
+
+    .controls-top {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-wrap {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #ddd;
+      border-radius: 999px;
+      font-size: 14px;
+      background: #fafafa;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: #bbb;
+      background: #fff;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #333;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      background: #f5f5f5;
+    }
+
+    .filter-btn.active {
+      background: #1f1f1f;
+      color: #fff;
+      border-color: #1f1f1f;
+    }
+
+    .result-meta {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .section {
+      margin-top: 56px;
+    }
+
+    .section.hidden {
+      display: none;
+    }
+
+    .section:first-of-type {
+      margin-top: 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 1px solid #ececec;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card.hidden {
+      display: none;
+    }
+
+    .thumb {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      background: #ddd;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: bold;
+      color: #666;
+      background: var(--soft);
+      border-radius: 999px;
+      padding: 6px 10px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      display: inline-block;
+      font-size: 21px;
+      font-weight: bold;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .card:hover .card-title {
+      text-decoration: underline;
+    }
+
+    .desc {
+      margin: 0 0 12px;
+      font-size: 15px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .reason {
+      margin: 0;
+      font-size: 14px;
+      color: #6f6f6f;
+      line-height: 1.8;
+    }
+
+    .reason-label {
+      display: inline-block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .empty-state {
+      display: none;
+      background: #fff;
+      border: 1px solid #ececec;
+      border-radius: 20px;
+      padding: 36px 20px;
+      text-align: center;
+      color: #666;
+      box-shadow: var(--shadow);
+      margin-top: 24px;
+    }
+
+    .footer-note {
+      margin-top: 70px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e5e5;
+      font-size: 14px;
+      color: #8a8a8a;
+      text-align: center;
+    }
+
+    mark {
+      background: #fff2b3;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 56px 20px 44px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      .controls {
+        position: static;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .thumb {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-inner">
+      <img src="profile.jpg" alt="송지민 프로필 사진" class="profile" />
+
+      <div class="header-text">
+        <div class="eyebrow">Content Reference Archive</div>
+        <h1>Reference Library</h1>
+
+        <p class="intro">
+          송지민<br />
+          커뮤니케이션 한다, 고로 존재한다.<br />
+          미디어와 콘텐츠를 통해 사람을 설득하는 일을 합니다.
+        </p>
+
+        <p class="sub">
+          콘텐츠 영감을 얻기 위해 저장한 레퍼런스와, 왜 저장했는지에 대한 짧은 메모를 기록하는 공간입니다.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="controls">
+      <div class="controls-top">
+        <div class="search-wrap">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="제목, 한 줄 설명, 저장 이유를 검색해보세요"
+          />
+        </div>
+
+        <div class="filter-group">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="youtube">YouTube</button>
+          <button class="filter-btn" data-filter="instagram">Instagram</button>
+          <button class="filter-btn" data-filter="brand">Brand Campaign</button>
+        </div>
+      </div>
+
+      <div class="result-meta" id="resultMeta">
+        전체 4개의 레퍼런스를 보고 있습니다.
+      </div>
+    </section>
+
+    <section class="section" data-section="youtube">
+      <div class="section-header">
+        <h2>🎬 YouTube</h2>
+        <div class="section-desc">영상 구조, 후킹, 스토리텔링 레퍼런스</div>
+      </div>
+
+      <div class="card-grid">
+        <article
+          class="card"
+          data-category="youtube"
+          data-title="내가 쓰는 AI들이 멍청한 이유"
+          data-description="초반 3초에서 강하게 후킹하는 구조"
+          data-search-text="썸네일이 너무 재밌다. 내가 쓰는 AI들이 멍청하다니 라는 문장이 강하게 꽂힌다. 침착맨은 이런 과감한 워딩을 써도 자기 캐릭터 안에서 소화된다. 이렇게 써도 리스크가 크지 않은 점이 흥미롭다."
+          data-display-reason="썸네일이 너무 재밌다.<br>'내가 쓰는 AI들이 멍청하다니…'라는 문장이 강하게 꽂힌다.<br>침착맨은 이런 과감한 워딩을 써도 자기 캐릭터 안에서 소화된다.<br>이렇게 써도 리스크가 크지 않은 점이 흥미롭다."
+        >
+          <img
+            src="youtube-1.png"
+            alt="YouTube reference thumbnail"
+            class="thumb"
+          />
+          <div class="card-body">
+            <div class="label">YouTube</div>
+            <a
+              href="https://youtu.be/mSoNhty4xEg?si=0D1FQ4LZ1zStqi54"
+              target="_blank"
+              class="card-title"
+            >
+              내가 쓰는 AI들이 멍청한 이유
+            </a>
+            <p class="desc">한 줄 설명: 초반 3초에서 강하게 후킹하는 구조</p>
+            <p class="reason"></p>
+          </div>
+        </article>
+
+        <article
+          class="card"
+          data-category="youtube"
+          data-title="저예산 독립영화의 비밀 장항준"
+          data-description="인물 중심 스토리텔링으로 끝까지 시청을 유도하는 구조"
+          data-search-text="요즘 가장 핫한 장항준 감독의 출연이라는 점이 먼저 눈에 들어온다. 콘텐츠에는 역시 인물이 중요하다. 사람들이 보고 싶게 만들고 끝까지 보게 만드는 인물의 힘이 있다. 나도 이런 인물들과 작업하고 싶고 내가 이런 인물이 되고 싶다."
+          data-display-reason="요즘 가장 핫한 장항준 감독의 출연이라는 점이 먼저 눈에 들어온다.<br>콘텐츠에는 역시 인물이 중요하다.<br>사람들이 보고 싶게 만들고, 끝까지 보게 만드는 인물의 힘이 있다.<br>나도 이런 인물들과 작업하고 싶고, 내가 이런 인물이 되고 싶다."
+        >
+          <img
+            src="youtube-2.png"
+            alt="YouTube reference thumbnail"
+            class="thumb"
+          />
+          <div class="card-body">
+            <div class="label">YouTube</div>
+            <a
+              href="https://www.youtube.com/watch?v=8TBvwEODZgU"
+              target="_blank"
+              class="card-title"
+            >
+              ※저예산 독립영화의 비밀※ 장항준 "내가 두 사람은 2,500으로 묶어놨어"
+            </a>
+            <p class="desc">한 줄 설명: 인물 중심 스토리텔링으로 끝까지 시청을 유도하는 구조</p>
+            <p class="reason"></p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" data-section="instagram">
+      <div class="section-header">
+        <h2>📸 Instagram</h2>
+        <div class="section-desc">썸네일, 카피, 저장 유도 구조 레퍼런스</div>
+      </div>
+
+      <div class="card-grid">
+        <article
+          class="card"
+          data-category="instagram"
+          data-title="인스타 콘텐츠 고양 백반 맛집 완벽 총 정리"
+          data-description="저장을 유도하는 구조"
+          data-search-text="완벽 총 정리라는 썸네일 제목이 강하게 눈에 들어온다. 따로 저장하라고 말하지 않아도 저장 욕구를 만든다. CTA 없이 행동을 유도하는 방식이 인상적이다."
+          data-display-reason="'완벽 총 정리'라는 썸네일 제목이 강하게 눈에 들어온다.<br>따로 저장하라고 말하지 않아도 저장 욕구를 만든다.<br>CTA 없이 행동을 유도하는 방식이 인상적이다."
+        >
+          <img
+            src="ig.png"
+            alt="Instagram reference thumbnail"
+            class="thumb"
+          />
+          <div class="card-body">
+            <div class="label">Instagram</div>
+            <a
+              href="https://www.instagram.com/p/DV8PMTWoCJM/?hl=ko&img_index=1"
+              target="_blank"
+              class="card-title"
+            >
+              인스타 콘텐츠: 고양 백반 맛집, '완벽 총 정리'
+            </a>
+            <p class="desc">한 줄 설명: 저장을 유도하는 구조</p>
+            <p class="reason"></p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" data-section="brand">
+      <div class="section-header">
+        <h2>🚀 Brand Campaign</h2>
+        <div class="section-desc">브랜드 메시지와 감정 전달 방식 레퍼런스</div>
+      </div>
+
+      <div class="card-grid">
+        <article
+          class="card"
+          data-category="brand"
+          data-title="Nike"
+          data-description="명불허전 나이키 제품보다 메시지를 먼저 전달"
+          data-search-text="명불허전 역시 나이키다. 제품을 먼저 말하지 않고 메시지를 먼저 던진다. Just Do It이라는 브랜드 철학을 감정적으로 전달하는 방식이 강력하다."
+          data-display-reason="명불허전, 역시 나이키다.<br>제품을 먼저 말하지 않고 메시지를 먼저 던진다.<br>Just Do It이라는 브랜드 철학을 감정적으로 전달하는 방식이 강력하다."
+        >
+          <img
+            src="nike.png"
+            alt="Brand campaign thumbnail"
+            class="thumb"
+          />
+          <div class="card-body">
+            <div class="label">Brand Campaign</div>
+            <a
+              href="https://www.instagram.com/nike/?hl=ko"
+              target="_blank"
+              class="card-title"
+            >
+              Nike
+            </a>
+            <p class="desc">한 줄 설명: 명불허전, 나이키! 제품보다 메시지를 먼저 전달</p>
+            <p class="reason"></p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="empty-state" id="emptyState">
+      검색 결과가 없습니다.<br />
+      다른 키워드로 검색하거나 필터를 바꿔보세요.
+    </div>
+
+    <div class="footer-note">
+      © Reference Library by Jimin Song
+    </div>
+  </main>
+
+  <script>
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.card');
+    const sections = document.querySelectorAll('.section[data-section]');
+    const searchInput = document.getElementById('searchInput');
+    const emptyState = document.getElementById('emptyState');
+    const resultMeta = document.getElementById('resultMeta');
+
+    let currentFilter = 'all';
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function renderReasonText() {
+      cards.forEach((card) => {
+        const reasonEl = card.querySelector('.reason');
+        const displayReason = card.dataset.displayReason || '';
+        reasonEl.innerHTML = '<span class="reason-label">왜 저장했는지:</span><br>' + displayReason;
+      });
+    }
+
+    function highlightText(element, keyword) {
+      const original = element.getAttribute('data-original');
+      if (!original) return;
+
+      if (!keyword) {
+        element.innerHTML = original;
+        return;
+      }
+
+      const safeKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp('(' + safeKeyword + ')', 'gi');
+      element.innerHTML = original.replace(regex, '<mark>$1</mark>');
+    }
+
+    function prepareHighlightTargets() {
+      document.querySelectorAll('.card-title, .desc, .reason').forEach((el) => {
+        el.setAttribute('data-original', el.innerHTML);
+      });
+    }
+
+    function updateResults() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const category = card.dataset.category;
+        const title = (card.dataset.title || '').toLowerCase();
+        const description = (card.dataset.description || '').toLowerCase();
+        const searchText = (card.dataset.searchText || '').toLowerCase();
+
+        const matchesFilter = currentFilter === 'all' || category === currentFilter;
+        const matchesSearch =
+          !query ||
+          title.includes(query) ||
+          description.includes(query) ||
+          searchText.includes(query);
+
+        if (matchesFilter && matchesSearch) {
+          card.classList.remove('hidden');
+          visibleCount += 1;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      sections.forEach((section) => {
+        const visibleCards = section.querySelectorAll('.card:not(.hidden)');
+        if (visibleCards.length === 0) {
+          section.classList.add('hidden');
+        } else {
+          section.classList.remove('hidden');
+        }
+      });
+
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+
+      const filterLabelMap = {
+        all: '전체',
+        youtube: 'YouTube',
+        instagram: 'Instagram',
+        brand: 'Brand Campaign'
+      };
+
+      const currentLabel = filterLabelMap[currentFilter];
+      const searchLabel = query ? ` · 검색어: "${searchInput.value.trim()}"` : '';
+      resultMeta.textContent = `${currentLabel} 기준 ${visibleCount}개의 레퍼런스를 보고 있습니다${searchLabel}.`;
+
+      document.querySelectorAll('.card-title, .desc, .reason').forEach((el) => {
+        highlightText(el, query);
+      });
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach((btn) => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentFilter = button.dataset.filter;
+        updateResults();
+      });
+    });
+
+    searchInput.addEventListener('input', updateResults);
+
+    renderReasonText();
+    prepareHighlightTargets();
+    updateResults();
+  </script>
+</body>
+</html>
